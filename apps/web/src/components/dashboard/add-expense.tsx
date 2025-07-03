@@ -114,8 +114,8 @@ export const AddExpense = () => {
       onOpenChange={setOpen}
     >
       <DialogTrigger asChild>
-        <Button className='w-full'>
-          <Plus className='h-4 w-4' />
+        <Button>
+          <Plus className='h-4 w-4 mr-2' />
           Add Expense
         </Button>
       </DialogTrigger>

@@ -18,4 +18,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  // Explicitly set the root to prevent looking for files outside this directory
+  root: __dirname,
+  // Configure server for Docker
+  server: {
+    host: '0.0.0.0',
+    port: 3001,
+  },
+  // Configure preview server for Docker
+  preview: {
+    host: '0.0.0.0',
+    port: 3001,
+  },
 });

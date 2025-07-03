@@ -70,9 +70,15 @@ export const expenseRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const userId = ctx.session.user.id;
+      const isAdmin = ctx.session.user.role === 'admin';
 
       // Build where conditions
-      const whereConditions = [eq(expense.userId, userId)];
+      const whereConditions = [];
+
+      // Only filter by userId if not an admin
+      if (!isAdmin) {
+        whereConditions.push(eq(expense.userId, userId));
+      }
 
       // Filter by status
       if (input.status !== 'all') {
@@ -114,32 +120,52 @@ export const expenseRouter = router({
         orderByColumn = expense.date;
       }
 
-      // Build query with user join to get user name
-      let query = db
-        .select({
-          id: expense.id,
-          description: expense.description,
-          amount: expense.amount,
-          date: expense.date,
-          userId: expense.userId,
-          category: expense.category,
-          status: expense.status,
-          notes: expense.notes,
-          createdAt: expense.createdAt,
-          updatedAt: expense.updatedAt,
-          submittedBy: user.name,
-        })
-        .from(expense)
-        .leftJoin(user, eq(expense.userId, user.id))
-        .where(and(...whereConditions))
-        .orderBy(orderByFn(orderByColumn));
+      // Build complete query with all conditions
+      const query =
+        whereConditions.length > 0
+          ? db
+              .select({
+                id: expense.id,
+                description: expense.description,
+                amount: expense.amount,
+                date: expense.date,
+                userId: expense.userId,
+                category: expense.category,
+                status: expense.status,
+                notes: expense.notes,
+                createdAt: expense.createdAt,
+                updatedAt: expense.updatedAt,
+                submittedBy: user.name,
+              })
+              .from(expense)
+              .leftJoin(user, eq(expense.userId, user.id))
+              .where(and(...whereConditions))
+              .orderBy(orderByFn(orderByColumn))
+          : db
+              .select({
+                id: expense.id,
+                description: expense.description,
+                amount: expense.amount,
+                date: expense.date,
+                userId: expense.userId,
+                category: expense.category,
+                status: expense.status,
+                notes: expense.notes,
+                createdAt: expense.createdAt,
+                updatedAt: expense.updatedAt,
+                submittedBy: user.name,
+              })
+              .from(expense)
+              .leftJoin(user, eq(expense.userId, user.id))
+              .orderBy(orderByFn(orderByColumn));
 
       // Get total count first
-      const countResult = await db
-        .select({ count: sql<number>`count(*)` })
-        .from(expense)
-        .where(and(...whereConditions));
-
+      const countResult = await (whereConditions.length > 0
+        ? db
+            .select({ count: sql<number>`count(*)` })
+            .from(expense)
+            .where(and(...whereConditions))
+        : db.select({ count: sql<number>`count(*)` }).from(expense));
       const totalCount = Number(countResult[0].count);
 
       // Apply pagination if provided

@@ -2,9 +2,9 @@
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
-# Copy package.json and install dependencies
+# Clean environment and install dependencies from scratch
 COPY package.json ./
-RUN bun install --force
+RUN rm -rf node_modules && rm -f bun.lockb && bun install --force
 
 # Copy source code and build
 COPY . .
@@ -16,7 +16,7 @@ ENV BETTER_AUTH_URL=http://localhost:3000
 RUN bun run build
 
 # Clean up dev dependencies
-RUN bun install --production --force
+RUN rm -rf node_modules && bun install --production --force
 
 # Start the application
 USER bun

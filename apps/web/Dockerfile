@@ -2,10 +2,9 @@
 FROM oven/bun:1 AS build
 WORKDIR /usr/src/app
 
-# Install dependencies
-COPY package.json bun.lock* ./
-# Remove --frozen-lockfile flag to allow lockfile updates
-RUN bun install
+# Clean environment and install dependencies from scratch
+COPY package.json ./
+RUN rm -rf node_modules && rm -f bun.lockb && bun install --force
 
 # Copy source code and build the app
 COPY . .
@@ -26,4 +25,4 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 
 # Start Nginx
-CMD ["nginx", "-g", "daemon off;"] 
+CMD ["nginx", "-g", "daemon off;"]

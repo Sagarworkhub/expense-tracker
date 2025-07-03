@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 
 # Install dependencies
 COPY package.json bun.lock* ./
-RUN bun install --frozen-lockfile
+# Remove --frozen-lockfile flag to allow lockfile updates
+RUN bun install
 
 # Copy source code and build the app
 COPY . .

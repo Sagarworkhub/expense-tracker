@@ -22,6 +22,7 @@ import { Link, useLocation } from '@tanstack/react-router';
 import { authClient } from '@/lib/auth-client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Loader from '@/components/loader';
+import { queryClient } from '@/utils/trpc';
 
 const userMenuItems = [
   {
@@ -62,6 +63,8 @@ export function AppSidebar() {
     session?.user?.role === 'admin' ? adminMenuItems : userMenuItems;
 
   const logout = () => {
+    // Invalidate all queries before signing out
+    queryClient.removeQueries();
     authClient.signOut();
   };
 
@@ -70,7 +73,7 @@ export function AppSidebar() {
   }
 
   return (
-    <Sidebar className='bg-red-500'>
+    <Sidebar className='bg-secondary'>
       <SidebarHeader className='border-b'>
         <div className='flex items-center gap-2 px-2 py-2'>
           <CreditCard className='h-6 w-6' />
@@ -88,7 +91,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     isActive={pathname === item.url}
-                    className='my-0.5 py-4 data-[active=true]:bg-black data-[active=true]:text-white'
+                    className='my-0.5 py-4 data-[active=true]:bg-primary data-[active=true]:text-accent'
                     variant='outline'
                   >
                     <Link to={item.url}>

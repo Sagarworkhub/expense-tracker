@@ -89,9 +89,6 @@ export function ApprovalTable({
       queryKey: [['expense', 'getAllForAdmin']],
     });
     queryClient.invalidateQueries({ queryKey: [['expense', 'getAnalytics']] });
-    queryClient.invalidateQueries({
-      queryKey: [['expense', 'getTeamAnalytics']],
-    });
   };
 
   return (

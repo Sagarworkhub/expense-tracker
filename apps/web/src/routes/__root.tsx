@@ -1,18 +1,17 @@
-import Header from "@/components/header";
-import Loader from "@/components/loader";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
-import type { trpc } from "@/utils/trpc";
-import type { QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import type { QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
+  createRootRouteWithContext,
   HeadContent,
   Outlet,
-  createRootRouteWithContext,
   useRouterState,
-} from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import "../index.css";
+} from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import Loader from '@/components/loader';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/sonner';
+import type { trpc } from '@/utils/trpc';
+import '../index.css';
 
 export interface RouterAppContext {
   trpc: typeof trpc;
@@ -21,23 +20,6 @@ export interface RouterAppContext {
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
-  head: () => ({
-    meta: [
-      {
-        title: "My App",
-      },
-      {
-        name: "description",
-        content: "My App is a web application",
-      },
-    ],
-    links: [
-      {
-        rel: "icon",
-        href: "/favicon.ico",
-      },
-    ],
-  }),
 });
 
 function RootComponent() {
@@ -45,19 +27,24 @@ function RootComponent() {
     select: (s) => s.isLoading,
   });
 
-
   return (
     <>
       <HeadContent />
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <div className="grid grid-rows-[auto_1fr] h-svh">
-          <Header />
-          {isFetching ? <Loader /> : <Outlet />}
-        </div>
-        <Toaster richColors />
+      <ThemeProvider
+        defaultTheme='light'
+        storageKey='vite-ui-theme'
+      >
+        {isFetching ? <Loader /> : <Outlet />}
+        <Toaster
+          richColors
+          position='top-right'
+        />
       </ThemeProvider>
-      <TanStackRouterDevtools position="bottom-left" />
-      <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+      <TanStackRouterDevtools position='bottom-left' />
+      <ReactQueryDevtools
+        position='bottom'
+        buttonPosition='bottom-right'
+      />
     </>
   );
 }

@@ -9,14 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TodosRouteImport } from './routes/todos'
+import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as OldDashboardRouteImport } from './routes/old-dashboard'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ExpensesRouteImport } from './routes/expenses'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthDashboardRouteImport } from './routes/_auth/dashboard'
+import { Route as AuthAllExpensesRouteImport } from './routes/_auth/all-expenses'
+import { Route as AuthAdminRouteRouteImport } from './routes/_auth/admin/route'
+import { Route as AuthAdminApproveExpensesRouteImport } from './routes/_auth/admin/approve-expenses'
 
-const TodosRoute = TodosRouteImport.update({
-  id: '/todos',
-  path: '/todos',
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OldDashboardRoute = OldDashboardRouteImport.update({
+  id: '/old-dashboard',
+  path: '/old-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -24,9 +41,13 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const ExpensesRoute = ExpensesRouteImport.update({
+  id: '/expenses',
+  path: '/expenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -34,48 +55,137 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthDashboardRoute = AuthDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthAllExpensesRoute = AuthAllExpensesRouteImport.update({
+  id: '/all-expenses',
+  path: '/all-expenses',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthAdminRouteRoute = AuthAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthAdminApproveExpensesRoute =
+  AuthAdminApproveExpensesRouteImport.update({
+    id: '/approve-expenses',
+    path: '/approve-expenses',
+    getParentRoute: () => AuthAdminRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/expenses': typeof ExpensesRoute
   '/login': typeof LoginRoute
-  '/todos': typeof TodosRoute
+  '/old-dashboard': typeof OldDashboardRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/admin': typeof AuthAdminRouteRouteWithChildren
+  '/all-expenses': typeof AuthAllExpensesRoute
+  '/dashboard': typeof AuthDashboardRoute
+  '/admin/approve-expenses': typeof AuthAdminApproveExpensesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/expenses': typeof ExpensesRoute
   '/login': typeof LoginRoute
-  '/todos': typeof TodosRoute
+  '/old-dashboard': typeof OldDashboardRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/admin': typeof AuthAdminRouteRouteWithChildren
+  '/all-expenses': typeof AuthAllExpensesRoute
+  '/dashboard': typeof AuthDashboardRoute
+  '/admin/approve-expenses': typeof AuthAdminApproveExpensesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/expenses': typeof ExpensesRoute
   '/login': typeof LoginRoute
-  '/todos': typeof TodosRoute
+  '/old-dashboard': typeof OldDashboardRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
+  '/_auth/admin': typeof AuthAdminRouteRouteWithChildren
+  '/_auth/all-expenses': typeof AuthAllExpensesRoute
+  '/_auth/dashboard': typeof AuthDashboardRoute
+  '/_auth/admin/approve-expenses': typeof AuthAdminApproveExpensesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/todos'
+  fullPaths:
+    | '/'
+    | '/expenses'
+    | '/login'
+    | '/old-dashboard'
+    | '/sign-in'
+    | '/sign-up'
+    | '/admin'
+    | '/all-expenses'
+    | '/dashboard'
+    | '/admin/approve-expenses'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/todos'
-  id: '__root__' | '/' | '/dashboard' | '/login' | '/todos'
+  to:
+    | '/'
+    | '/expenses'
+    | '/login'
+    | '/old-dashboard'
+    | '/sign-in'
+    | '/sign-up'
+    | '/admin'
+    | '/all-expenses'
+    | '/dashboard'
+    | '/admin/approve-expenses'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/expenses'
+    | '/login'
+    | '/old-dashboard'
+    | '/sign-in'
+    | '/sign-up'
+    | '/_auth/admin'
+    | '/_auth/all-expenses'
+    | '/_auth/dashboard'
+    | '/_auth/admin/approve-expenses'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  ExpensesRoute: typeof ExpensesRoute
   LoginRoute: typeof LoginRoute
-  TodosRoute: typeof TodosRoute
+  OldDashboardRoute: typeof OldDashboardRoute
+  SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/todos': {
-      id: '/todos'
-      path: '/todos'
-      fullPath: '/todos'
-      preLoaderRoute: typeof TodosRouteImport
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/old-dashboard': {
+      id: '/old-dashboard'
+      path: '/old-dashboard'
+      fullPath: '/old-dashboard'
+      preLoaderRoute: typeof OldDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -85,11 +195,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -99,14 +216,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/dashboard': {
+      id: '/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthDashboardRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/all-expenses': {
+      id: '/_auth/all-expenses'
+      path: '/all-expenses'
+      fullPath: '/all-expenses'
+      preLoaderRoute: typeof AuthAllExpensesRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/admin': {
+      id: '/_auth/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthAdminRouteRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/admin/approve-expenses': {
+      id: '/_auth/admin/approve-expenses'
+      path: '/approve-expenses'
+      fullPath: '/admin/approve-expenses'
+      preLoaderRoute: typeof AuthAdminApproveExpensesRouteImport
+      parentRoute: typeof AuthAdminRouteRoute
+    }
   }
 }
 
+interface AuthAdminRouteRouteChildren {
+  AuthAdminApproveExpensesRoute: typeof AuthAdminApproveExpensesRoute
+}
+
+const AuthAdminRouteRouteChildren: AuthAdminRouteRouteChildren = {
+  AuthAdminApproveExpensesRoute: AuthAdminApproveExpensesRoute,
+}
+
+const AuthAdminRouteRouteWithChildren = AuthAdminRouteRoute._addFileChildren(
+  AuthAdminRouteRouteChildren,
+)
+
+interface AuthRouteRouteChildren {
+  AuthAdminRouteRoute: typeof AuthAdminRouteRouteWithChildren
+  AuthAllExpensesRoute: typeof AuthAllExpensesRoute
+  AuthDashboardRoute: typeof AuthDashboardRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthAdminRouteRoute: AuthAdminRouteRouteWithChildren,
+  AuthAllExpensesRoute: AuthAllExpensesRoute,
+  AuthDashboardRoute: AuthDashboardRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
+  ExpensesRoute: ExpensesRoute,
   LoginRoute: LoginRoute,
-  TodosRoute: TodosRoute,
+  OldDashboardRoute: OldDashboardRoute,
+  SignInRoute: SignInRoute,
+  SignUpRoute: SignUpRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

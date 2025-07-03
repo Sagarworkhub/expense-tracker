@@ -2,12 +2,19 @@
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
-# Clean environment and install dependencies from scratch
+# Copy package.json files for all workspaces
 COPY package.json ./
+COPY apps/server/package.json ./apps/server/
+COPY turbo.json ./
+
+# Install dependencies in the server directory
+WORKDIR /usr/src/app/apps/server
 RUN rm -rf node_modules && rm -f bun.lockb && bun install --force
 
-# Copy source code and build
-COPY . .
+# Copy the server source code
+COPY apps/server ./
+
+# Build the server
 ENV NODE_ENV=production
 ENV DATABASE_URL='postgresql://neondb_owner:npg_AQ4bchwyUF7n@ep-shy-union-a291qvfj.eu-central-1.aws.neon.tech/neondb?sslmode=require'
 ENV CORS_ORIGIN=http://localhost:3001

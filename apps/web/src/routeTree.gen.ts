@@ -11,9 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as SignInRouteImport } from './routes/sign-in'
-import { Route as OldDashboardRouteImport } from './routes/old-dashboard'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as ExpensesRouteImport } from './routes/expenses'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthDashboardRouteImport } from './routes/_auth/dashboard'
@@ -29,21 +26,6 @@ const SignUpRoute = SignUpRouteImport.update({
 const SignInRoute = SignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OldDashboardRoute = OldDashboardRouteImport.update({
-  id: '/old-dashboard',
-  path: '/old-dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExpensesRoute = ExpensesRouteImport.update({
-  id: '/expenses',
-  path: '/expenses',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRouteRoute = AuthRouteRouteImport.update({
@@ -79,9 +61,6 @@ const AuthAdminApproveExpensesRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/expenses': typeof ExpensesRoute
-  '/login': typeof LoginRoute
-  '/old-dashboard': typeof OldDashboardRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/admin': typeof AuthAdminRouteRouteWithChildren
@@ -91,9 +70,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/expenses': typeof ExpensesRoute
-  '/login': typeof LoginRoute
-  '/old-dashboard': typeof OldDashboardRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/admin': typeof AuthAdminRouteRouteWithChildren
@@ -105,9 +81,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
-  '/expenses': typeof ExpensesRoute
-  '/login': typeof LoginRoute
-  '/old-dashboard': typeof OldDashboardRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/_auth/admin': typeof AuthAdminRouteRouteWithChildren
@@ -119,9 +92,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/expenses'
-    | '/login'
-    | '/old-dashboard'
     | '/sign-in'
     | '/sign-up'
     | '/admin'
@@ -131,9 +101,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/expenses'
-    | '/login'
-    | '/old-dashboard'
     | '/sign-in'
     | '/sign-up'
     | '/admin'
@@ -144,9 +111,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
-    | '/expenses'
-    | '/login'
-    | '/old-dashboard'
     | '/sign-in'
     | '/sign-up'
     | '/_auth/admin'
@@ -158,9 +122,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  ExpensesRoute: typeof ExpensesRoute
-  LoginRoute: typeof LoginRoute
-  OldDashboardRoute: typeof OldDashboardRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
 }
@@ -179,27 +140,6 @@ declare module '@tanstack/react-router' {
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof SignInRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/old-dashboard': {
-      id: '/old-dashboard'
-      path: '/old-dashboard'
-      fullPath: '/old-dashboard'
-      preLoaderRoute: typeof OldDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/expenses': {
-      id: '/expenses'
-      path: '/expenses'
-      fullPath: '/expenses'
-      preLoaderRoute: typeof ExpensesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth': {
@@ -278,9 +218,6 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
-  ExpensesRoute: ExpensesRoute,
-  LoginRoute: LoginRoute,
-  OldDashboardRoute: OldDashboardRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
 }

@@ -20,16 +20,29 @@ RUN bun run build
 
 # Production stage with Nginx
 FROM nginx:alpine AS release
+
+# Install gettext for envsubst
+RUN apk add --no-cache gettext
+
 WORKDIR /usr/share/nginx/html
 
 # Copy built assets from the build stage
 COPY --from=build /usr/src/app/apps/web/dist ./
 
-# Copy custom Nginx config
-COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx config as a template
+COPY apps/web/nginx.conf /etc/nginx/templates/default.conf.template
+
+# Set default backend URL if not provided
+ENV BACKEND_URL=http://server:3000/
+
+# Create a startup script
+RUN echo '#!/bin/sh\n\
+envsubst \'\$BACKEND_URL\' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf\n\
+exec nginx -g "daemon off;"' > /docker-entrypoint.sh && \
+chmod +x /docker-entrypoint.sh
 
 # Expose port 80
 EXPOSE 80
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start Nginx with the custom entrypoint
+CMD ["/docker-entrypoint.sh"]

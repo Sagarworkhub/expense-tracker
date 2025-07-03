@@ -8,13 +8,11 @@ WORKDIR /usr/src/app
 FROM base AS install
 RUN mkdir -p /temp/dev
 COPY package.json bun.lock* /temp/dev/
-# Remove --frozen-lockfile flag to allow lockfile updates
 RUN cd /temp/dev && bun install
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
 COPY package.json bun.lock* /temp/prod/
-# Remove --frozen-lockfile flag to allow lockfile updates
 RUN cd /temp/prod && bun install --production
 
 # copy node_modules from temp directory
@@ -40,4 +38,4 @@ COPY --from=prerelease /usr/src/app/package.json .
 # run the app
 USER bun
 EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "start" ] 
+ENTRYPOINT [ "bun", "run", "start" ]

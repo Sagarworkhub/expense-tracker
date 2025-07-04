@@ -30,19 +30,13 @@ WORKDIR /usr/share/nginx/html
 COPY --from=build /usr/src/app/apps/web/dist ./
 
 # Copy nginx config as a template
-COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
+COPY apps/web/nginx.conf.template /etc/nginx/templates/default.conf.template
 
 # Set default backend URL if not provided
-ENV BACKEND_URL=http://server:3000/
-
-# Create a simple entrypoint script
-RUN echo '#!/bin/sh' > /entrypoint.sh && \
-    echo 'sed -i "s|BACKEND_URL_PLACEHOLDER|$BACKEND_URL|g" /etc/nginx/conf.d/default.conf' >> /entrypoint.sh && \
-    echo 'exec nginx -g "daemon off;"' >> /entrypoint.sh && \
-    chmod +x /entrypoint.sh
+ENV BACKEND_URL=http://localhost:3000
 
 # Expose port 80
 EXPOSE 80
 
-# Override the default entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+# Use nginx's built-in template system
+CMD ["nginx", "-g", "daemon off;"]

@@ -16,6 +16,9 @@ COPY apps/web ./
 
 # Build the web app
 ENV NODE_ENV=production
+# Set the VITE_SERVER_URL environment variable for the build
+ARG VITE_SERVER_URL
+ENV VITE_SERVER_URL=${VITE_SERVER_URL}
 RUN bun run build
 
 # Production stage with Caddy

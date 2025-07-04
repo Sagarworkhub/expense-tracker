@@ -32,6 +32,16 @@
         }
     }
 
+    # Handle TRPC requests - forward to backend
+    handle /trpc/* {
+        reverse_proxy {$BACKEND_URL} {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+            header_up X-Forwarded-For {remote_host}
+            header_up X-Forwarded-Proto {scheme}
+        }
+    }
+
     # For all other requests, try the requested path first, then fall back to index.html
     try_files {path} /index.html
 

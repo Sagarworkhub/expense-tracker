@@ -24,7 +24,7 @@
 
     # Handle API requests - forward to backend
     handle /api/* {
-        reverse_proxy {$BACKEND_URL} {
+        reverse_proxy {$VITE_SERVER_URL} {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
             header_up X-Forwarded-For {remote_host}
@@ -34,7 +34,7 @@
 
     # Handle TRPC requests - forward to backend
     handle /trpc/* {
-        reverse_proxy {$BACKEND_URL} {
+        reverse_proxy {$VITE_SERVER_URL} {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
             header_up X-Forwarded-For {remote_host}

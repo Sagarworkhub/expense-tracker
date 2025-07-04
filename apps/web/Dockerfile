@@ -40,7 +40,7 @@ COPY apps/web/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # Set default backend URL if not provided
-ENV BACKEND_URL=http://localhost:3000
+ENV VITE_SERVER_URL=https://gracious-patience-production.up.railway.app
 # Set default PORT if not provided by Railway
 ENV PORT=80
 

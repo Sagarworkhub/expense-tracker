@@ -38,11 +38,11 @@ ENV BACKEND_URL=http://server:3000/
 # Create a startup script to replace the placeholder with the actual URL
 RUN echo '#!/bin/sh\n\
 sed -i "s|BACKEND_URL_PLACEHOLDER|$BACKEND_URL|g" /etc/nginx/conf.d/default.conf\n\
-exec nginx -g "daemon off;"' > /docker-entrypoint.sh && \
-chmod +x /docker-entrypoint.sh
+exec nginx -g "daemon off;"' > /usr/local/bin/docker-entrypoint.sh && \
+chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Expose port 80
 EXPOSE 80
 
 # Start Nginx with the custom entrypoint
-CMD ["/docker-entrypoint.sh"]
+CMD ["/usr/local/bin/docker-entrypoint.sh"]

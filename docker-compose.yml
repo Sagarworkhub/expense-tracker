@@ -18,6 +18,9 @@ services:
       - '4001:80'
     env_file:
       - ./apps/web/.env
+    environment:
+      - PORT=80
+      - BACKEND_URL=http://server:3000
     depends_on:
       - server
     networks:

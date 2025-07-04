@@ -1,36 +1,39 @@
+# Global options
 {
-    # Global options
+    # Disable admin endpoint for security in production
     admin off
+    # Disable automatic HTTPS since Railway handles that
+    auto_https off
+    # Log to stdout for Railway logs
+    log {
+        format console
+    }
+    # Trust Railway's proxy
+    servers {
+        trusted_proxies static private_ranges
+    }
 }
 
-:80 {
+# Listen on the PORT environment variable that Railway sets
+:{$PORT} {
     # Root directory for static files
     root * /usr/share/caddy
 
     # Enable compression
     encode gzip
 
-    # Cache static assets
-    @static {
-        path *.jpg *.jpeg *.png *.gif *.ico *.css *.js
-    }
-    header @static Cache-Control "public, max-age=86400"
-
-    # Handle React router - serve index.html for non-file requests
-    try_files {path} /index.html
-
-    # API proxy - use environment variable
-    handle_path /api/* {
+    # Handle API requests - forward to backend
+    handle /api/* {
         reverse_proxy {$BACKEND_URL} {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
             header_up X-Forwarded-For {remote_host}
             header_up X-Forwarded-Proto {scheme}
-            
-            # Add timeout settings
-            timeout 30s
         }
     }
+
+    # For all other requests, try the requested path first, then fall back to index.html
+    try_files {path} /index.html
 
     # Serve static files
     file_server

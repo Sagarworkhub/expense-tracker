@@ -13,7 +13,8 @@ app.use(logger());
 app.use(
   '/*',
   cors({
-    origin: process.env.CORS_ORIGIN || '',
+    origin:
+      process.env.CORS_ORIGIN || 'https://steady-chaja-bf5ffb.netlify.app/',
     allowMethods: ['GET', 'POST', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

@@ -11,7 +11,9 @@ export const auth = betterAuth({
     provider: 'pg',
     schema: schema,
   }),
-  trustedOrigins: [process.env.CORS_ORIGIN || ''],
+  trustedOrigins: [
+    process.env.CORS_ORIGIN || 'https://steady-chaja-bf5ffb.netlify.app/',
+  ],
   emailAndPassword: {
     enabled: true,
   },

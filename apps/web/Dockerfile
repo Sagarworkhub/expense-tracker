@@ -18,19 +18,16 @@ COPY apps/web ./
 ENV NODE_ENV=production
 RUN bun run build
 
-# Production stage with Nginx
-FROM nginx:alpine AS release
+# Production stage with Caddy
+FROM caddy:2-alpine AS release
 
-# Install gettext for envsubst
-RUN apk add --no-cache gettext
-
-WORKDIR /usr/share/nginx/html
+WORKDIR /usr/share/caddy
 
 # Copy built assets from the build stage
-COPY --from=build /usr/src/app/apps/web/dist ./
+COPY --from=build /usr/src/app/apps/web/dist /usr/share/caddy
 
-# Copy nginx config as a template
-COPY apps/web/nginx.conf.template /etc/nginx/templates/default.conf.template
+# Copy Caddyfile
+COPY apps/web/Caddyfile /etc/caddy/Caddyfile
 
 # Set default backend URL if not provided
 ENV BACKEND_URL=http://localhost:3000
@@ -38,5 +35,5 @@ ENV BACKEND_URL=http://localhost:3000
 # Expose port 80
 EXPOSE 80
 
-# Use nginx's built-in template system
-CMD ["nginx", "-g", "daemon off;"]
+# Start Caddy
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]

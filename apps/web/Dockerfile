@@ -30,14 +30,14 @@ WORKDIR /usr/share/nginx/html
 COPY --from=build /usr/src/app/apps/web/dist ./
 
 # Copy nginx config as a template
-COPY apps/web/nginx.conf /etc/nginx/templates/default.conf.template
+COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Set default backend URL if not provided
 ENV BACKEND_URL=http://server:3000/
 
-# Create a startup script
+# Create a startup script to replace the placeholder with the actual URL
 RUN echo '#!/bin/sh\n\
-envsubst \'\$BACKEND_URL\' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf\n\
+sed -i "s|BACKEND_URL_PLACEHOLDER|$BACKEND_URL|g" /etc/nginx/conf.d/default.conf\n\
 exec nginx -g "daemon off;"' > /docker-entrypoint.sh && \
 chmod +x /docker-entrypoint.sh
 

@@ -13,26 +13,11 @@ app.use(logger());
 app.use(
   '/*',
   cors({
-    origin: (origin) => {
-      const allowedOrigins = [
-        'https://steady-chaja-bf5ffb.netlify.app',
-        'http://localhost:3001',
-        'http://localhost:4001',
-        'http://localhost:5173',
-      ];
-
-      // If CORS_ORIGIN is set in env, use that instead
-      if (process.env.CORS_ORIGIN) {
-        return process.env.CORS_ORIGIN;
-      }
-
-      // If no origin or it's in allowed list, allow it
-      return origin && allowedOrigins.includes(origin)
-        ? origin
-        : allowedOrigins[0];
-    },
-    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    origin: '*',
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
+    exposeHeaders: ['Content-Length', 'X-Requested-With'],
+    maxAge: 86400,
     credentials: true,
   })
 );

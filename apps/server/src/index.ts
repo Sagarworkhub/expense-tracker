@@ -13,7 +13,10 @@ app.use(logger());
 app.use(
   '/*',
   cors({
-    origin: '*',
+    origin: [
+      'http://localhost:3001',
+      'https://intuitive-curiosity-production.up.railway.app',
+    ],
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     exposeHeaders: ['Content-Length', 'X-Requested-With'],
@@ -21,6 +24,7 @@ app.use(
     credentials: true,
   })
 );
+app.on(['POST', 'GET'], '/api/auth/**', (c) => auth.handler(c.req.raw));
 
 // Add endpoint to check current user's role
 app.get('/api/users/role', async (c) => {
@@ -34,8 +38,6 @@ app.get('/api/users/role', async (c) => {
 
   return c.json({ role: session.user.role || 'user' });
 });
-
-app.on(['POST', 'GET'], '/api/auth/**', (c) => auth.handler(c.req.raw));
 
 app.use(
   '/trpc/*',

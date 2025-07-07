@@ -12,7 +12,8 @@ export const auth = betterAuth({
     schema: schema,
   }),
   trustedOrigins: [
-    process.env.CORS_ORIGIN || 'https://steady-chaja-bf5ffb.netlify.app/',
+    'http://localhost:3001',
+    'https://intuitive-curiosity-production.up.railway.app',
   ],
   emailAndPassword: {
     enabled: true,

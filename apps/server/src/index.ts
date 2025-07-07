@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3001',
-      'https://intuitive-curiosity-production.up.railway.app',
+      'https://expense-tracker-app.up.railway.app',
     ],
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],

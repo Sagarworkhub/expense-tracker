@@ -13,7 +13,7 @@ export const auth = betterAuth({
   }),
   trustedOrigins: [
     'http://localhost:3001',
-    'https://intuitive-curiosity-production.up.railway.app',
+    'https://expense-tracker-app.up.railway.app',
   ],
   emailAndPassword: {
     enabled: true,

@@ -17,7 +17,7 @@ COPY apps/server ./
 # Build the server
 ENV NODE_ENV=production
 ENV DATABASE_URL='postgresql://neondb_owner:npg_AQ4bchwyUF7n@ep-shy-union-a291qvfj.eu-central-1.aws.neon.tech/neondb?sslmode=require'
-ENV CORS_ORIGIN=https://steady-chaja-bf5ffb.netlify.app
+ENV CORS_ORIGIN=https://expense-tracker-app.up.railway.app
 ENV BETTER_AUTH_SECRET=skjqUTlcFnqiv7ytqOf7J8hnoelRksHu
 ENV BETTER_AUTH_URL=http://localhost:3000
 RUN bun run build

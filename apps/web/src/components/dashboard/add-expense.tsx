@@ -93,7 +93,7 @@ export const AddExpense = () => {
 
   const onSubmit = async (data: ExpenseFormValues) => {
     try {
-      createMutation.mutate({
+      await createMutation.mutateAsync({
         description: data.description,
         amount: parseFloat(data.amount),
         category: data.category as ExpenseCategory,

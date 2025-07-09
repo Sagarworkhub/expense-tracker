@@ -82,112 +82,114 @@ function SignInForm() {
   }
 
   return (
-    <div className='h-screen w-screen flex items-center justify-center'>
-      <Card className='w-full max-w-sm'>
-        <CardHeader className='space-y-2 text-center pb-8'>
-          <div className='mx-auto w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-4'>
-            <Lock className='w-6 h-6 text-white' />
-          </div>
-          <CardTitle className='text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent'>
-            Welcome back
-          </CardTitle>
-          <CardDescription className='text-slate-600'>
-            Sign in to your account to continue
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className='grid gap-6'
-            >
-              <FormField
-                control={form.control}
-                name='email'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='text-sm font-medium text-slate-700'>
-                      Email
-                    </FormLabel>
-                    <div className='relative'>
-                      <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4' />
-                      <FormControl>
-                        <Input
-                          type='email'
-                          className='pl-10 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200'
-                          {...field}
-                        />
-                      </FormControl>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='password'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='text-sm font-medium text-slate-700'>
-                      Password
-                    </FormLabel>
-                    <div className='relative'>
-                      <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4' />
-                      <FormControl>
-                        <Input
-                          type={showPassword ? 'text' : 'password'}
-                          className='pl-10 pr-12 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200'
-                          {...field}
-                        />
-                      </FormControl>
-                      <Button
-                        type='button'
-                        variant='ghost'
-                        size='icon'
-                        className='absolute right-0 top-0 h-full px-3 hover:bg-transparent cursor-pointer'
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? (
-                          <EyeOff className='h-4 w-4' />
-                        ) : (
-                          <Eye className='h-4 w-4' />
-                        )}
-                        <span className='sr-only'>
-                          {showPassword ? 'Hide password' : 'Show password'}
-                        </span>
-                      </Button>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type='submit'
-                className='w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25'
-                disabled={isSubmitting}
+    <div className='min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4'>
+      <div className='w-full max-w-md'>
+        <Card className='border-0 shadow-2xl shadow-purple-400/50 bg-white/80 backdrop-blur-sm w-full max-w-md'>
+          <CardHeader className='space-y-2 text-center pb-8'>
+            <div className='mx-auto w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-4'>
+              <Lock className='w-6 h-6 text-white' />
+            </div>
+            <CardTitle className='text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent'>
+              Welcome back
+            </CardTitle>
+            <CardDescription className='text-slate-600'>
+              Sign in to your account to continue
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className='grid gap-6'
               >
-                {isSubmitting ? (
-                  <div className='flex items-center gap-2'>
-                    <Loader2 className='animate-spin w-4 h-4' />
-                    Signing in...
-                  </div>
-                ) : (
-                  'Sign in'
-                )}
-              </Button>
-            </form>
-          </Form>
-          <div className='text-center text-sm mt-4'>
-            Don&apos;t have an account?{' '}
-            <Link
-              to='/sign-up'
-              className='underline underline-offset-4'
-            >
-              Sign up
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+                <FormField
+                  control={form.control}
+                  name='email'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-sm font-medium text-slate-700'>
+                        Email
+                      </FormLabel>
+                      <div className='relative'>
+                        <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4' />
+                        <FormControl>
+                          <Input
+                            type='email'
+                            className='pl-10 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200'
+                            {...field}
+                          />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='password'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-sm font-medium text-slate-700'>
+                        Password
+                      </FormLabel>
+                      <div className='relative'>
+                        <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4' />
+                        <FormControl>
+                          <Input
+                            type={showPassword ? 'text' : 'password'}
+                            className='pl-10 pr-12 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200'
+                            {...field}
+                          />
+                        </FormControl>
+                        <Button
+                          type='button'
+                          variant='ghost'
+                          size='icon'
+                          className='absolute right-0 top-0 h-full px-3 hover:bg-transparent cursor-pointer'
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? (
+                            <EyeOff className='h-4 w-4' />
+                          ) : (
+                            <Eye className='h-4 w-4' />
+                          )}
+                          <span className='sr-only'>
+                            {showPassword ? 'Hide password' : 'Show password'}
+                          </span>
+                        </Button>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type='submit'
+                  className='w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25'
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <div className='flex items-center gap-2'>
+                      <Loader2 className='animate-spin w-4 h-4' />
+                      Signing in...
+                    </div>
+                  ) : (
+                    'Sign in'
+                  )}
+                </Button>
+              </form>
+            </Form>
+            <div className='text-center text-sm mt-4'>
+              Don&apos;t have an account?{' '}
+              <Link
+                to='/sign-up'
+                className='underline underline-offset-4'
+              >
+                Sign up
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

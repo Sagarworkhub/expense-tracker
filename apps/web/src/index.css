@@ -51,6 +51,13 @@ body {
 	--sidebar-accent-foreground: oklch(0.205 0 0);
 	--sidebar-border: oklch(0.922 0 0);
 	--sidebar-ring: oklch(0.708 0 0);
+
+	/* Custom emerald/teal theme colors */
+	--emerald-primary: oklch(0.646 0.222 162.48);
+	--emerald-primary-foreground: oklch(0.985 0 0);
+	--emerald-secondary: oklch(0.6 0.118 184.704);
+	--emerald-accent: oklch(0.769 0.188 162.48);
+	--emerald-muted: oklch(0.97 0.02 162.48);
 }
 
 .dark {
@@ -85,6 +92,13 @@ body {
 	--sidebar-accent-foreground: oklch(0.985 0 0);
 	--sidebar-border: oklch(1 0 0 / 10%);
 	--sidebar-ring: oklch(0.556 0 0);
+
+	/* Dark mode emerald/teal colors */
+	--emerald-primary: oklch(0.696 0.17 162.48);
+	--emerald-primary-foreground: oklch(0.145 0 0);
+	--emerald-secondary: oklch(0.769 0.188 184.704);
+	--emerald-accent: oklch(0.488 0.243 162.48);
+	--emerald-muted: oklch(0.269 0.02 162.48);
 }
 
 @theme inline {
@@ -123,12 +137,20 @@ body {
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
+
+	/* Custom emerald theme colors */
+	--color-emerald-primary: var(--emerald-primary);
+	--color-emerald-primary-foreground: var(--emerald-primary-foreground);
+	--color-emerald-secondary: var(--emerald-secondary);
+	--color-emerald-accent: var(--emerald-accent);
+	--color-emerald-muted: var(--emerald-muted);
 }
 
 @layer base {
 	* {
 		@apply border-border outline-ring/50;
 	}
+
 	body {
 		@apply bg-background text-foreground;
 	}

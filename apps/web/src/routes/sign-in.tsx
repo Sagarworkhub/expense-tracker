@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Lock, Mail } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import Loader from '@/components/loader';
 import { toast } from 'sonner';
@@ -84,10 +84,15 @@ function SignInForm() {
   return (
     <div className='h-screen w-screen flex items-center justify-center'>
       <Card className='w-full max-w-sm'>
-        <CardHeader className='text-center'>
-          <CardTitle className='text-xl'>Sign in to your account</CardTitle>
-          <CardDescription>
-            Enter your credentials to access your account
+        <CardHeader className='space-y-2 text-center pb-8'>
+          <div className='mx-auto w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-4'>
+            <Lock className='w-6 h-6 text-white' />
+          </div>
+          <CardTitle className='text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent'>
+            Welcome back
+          </CardTitle>
+          <CardDescription className='text-slate-600'>
+            Sign in to your account to continue
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -101,13 +106,19 @@ function SignInForm() {
                 name='email'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type='email'
-                        {...field}
-                      />
-                    </FormControl>
+                    <FormLabel className='text-sm font-medium text-slate-700'>
+                      Email
+                    </FormLabel>
+                    <div className='relative'>
+                      <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4' />
+                      <FormControl>
+                        <Input
+                          type='email'
+                          className='pl-10 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200'
+                          {...field}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -117,11 +128,15 @@ function SignInForm() {
                 name='password'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className='text-sm font-medium text-slate-700'>
+                      Password
+                    </FormLabel>
                     <div className='relative'>
+                      <Lock className='absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4' />
                       <FormControl>
                         <Input
                           type={showPassword ? 'text' : 'password'}
+                          className='pl-10 pr-12 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200'
                           {...field}
                         />
                       </FormControl>
@@ -148,12 +163,12 @@ function SignInForm() {
               />
               <Button
                 type='submit'
-                className='w-full cursor-pointer'
+                className='w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25'
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <div className='flex items-center gap-2'>
-                    <Loader2 className='animate-spin' />
+                    <Loader2 className='animate-spin w-4 h-4' />
                     Signing in...
                   </div>
                 ) : (

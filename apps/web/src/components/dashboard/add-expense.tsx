@@ -9,7 +9,16 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { CalendarIcon, Loader2, Plus } from 'lucide-react';
+import {
+  CalendarIcon,
+  DollarSign,
+  FileText,
+  Loader2,
+  MessageCircle,
+  Plus,
+  Receipt,
+  Tag,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -108,23 +117,39 @@ export const AddExpense = () => {
     }
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      reset();
+    }
+    setOpen(open);
+  };
+
   return (
     <Dialog
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={handleOpenChange}
     >
       <DialogTrigger asChild>
-        <Button>
-          <Plus className='h-4 w-4 mr-2' />
+        <Button className='bg-emerald-primary hover:bg-emerald-secondary text-emerald-primary-foreground shadow-lg transition-all duration-200 transform hover:scale-[1.02]'>
+          <Plus className='size-4' />
           Add Expense
         </Button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add Expense</DialogTitle>
-          <DialogDescription>
-            Add a new expense to your account.
-          </DialogDescription>
+      <DialogContent className='sm:max-w-[500px] border-0 shadow-2xl shadow-slate-200/50 bg-card backdrop-blur-sm'>
+        <DialogHeader className='space-y-3 pb-6'>
+          <div className='flex items-center gap-3'>
+            <div className='size-10 bg-emerald-primary rounded-lg flex items-center justify-center'>
+              <Receipt className='size-5 text-emerald-primary-foreground' />
+            </div>
+            <div>
+              <DialogTitle className='text-xl font-semibold text-card-foreground'>
+                Add New Expense
+              </DialogTitle>
+              <DialogDescription className='text-muted-foreground'>
+                Track your spending by adding expense details below
+              </DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
         <div>
           <form
@@ -133,12 +158,18 @@ export const AddExpense = () => {
           >
             <div className='grid grid-cols-2 gap-4'>
               <div className='space-y-2'>
-                <Label htmlFor='amount'>Amount *</Label>
+                <Label htmlFor='amount'>
+                  <DollarSign className='size-4 text-emerald-secondary' />
+                  Amount *
+                </Label>
                 <Input
                   id='amount'
                   type='number'
                   step='1'
                   placeholder='0.00'
+                  className={cn(
+                    'h-11 border-slate-200 focus-visible:border-emerald-accent focus-visible:ring-emerald-accent/20 transition-all duration-200 bg-white/95 backdrop-blur-sm'
+                  )}
                   {...register('amount', {
                     required: 'Amount is required',
                     min: {
@@ -155,7 +186,10 @@ export const AddExpense = () => {
                 )}
               </div>
               <div className='space-y-2'>
-                <Label htmlFor='category'>Category *</Label>
+                <Label htmlFor='category'>
+                  <Tag className='size-4 text-emerald-secondary' />
+                  Category *
+                </Label>
                 <Controller
                   name='category'
                   control={control}
@@ -165,14 +199,21 @@ export const AddExpense = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className='w-full'>
+                      <SelectTrigger
+                        className={cn(
+                          'w-full h-11 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500/20 transition-all duration-200',
+                          errors.category &&
+                            'border-red-300 focus:border-red-500 focus:ring-red-500/20'
+                        )}
+                      >
                         <SelectValue placeholder='Select category' />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className='max-h-60 bg-popover border-border'>
                         {categories.map((category) => (
                           <SelectItem
                             key={category}
                             value={category}
+                            className='flex items-center gap-2 focus:bg-accent focus:text-accent-foreground'
                           >
                             {category}
                           </SelectItem>
@@ -190,7 +231,10 @@ export const AddExpense = () => {
             </div>
 
             <div className='space-y-2'>
-              <Label>Date *</Label>
+              <Label>
+                <CalendarIcon className='size-4 text-emerald-secondary' />
+                Date *
+              </Label>
               <Controller
                 name='date'
                 control={control}
@@ -201,8 +245,9 @@ export const AddExpense = () => {
                       <Button
                         variant='outline'
                         className={cn(
-                          'w-full justify-start text-left font-normal',
-                          !field.value && 'text-muted-foreground'
+                          'w-full h-11 justify-start text-left font-normal border-slate-200 hover:border-emerald-300 transition-all duration-200',
+                          !field.value && 'text-muted-foreground',
+                          errors.date && 'border-red-300 focus:border-red-500'
                         )}
                         type='button'
                       >
@@ -218,6 +263,7 @@ export const AddExpense = () => {
                         selected={field.value}
                         onSelect={field.onChange}
                         disabled={(date) => date > new Date()}
+                        className='rounded-lg border border-slate-200'
                       />
                     </PopoverContent>
                   </Popover>
@@ -229,10 +275,14 @@ export const AddExpense = () => {
             </div>
 
             <div className='space-y-2'>
-              <Label htmlFor='description'>Description *</Label>
+              <Label htmlFor='description'>
+                <FileText className='size-4 text-emerald-secondary' />
+                Description *
+              </Label>
               <Textarea
                 id='description'
                 placeholder='Describe your expense...'
+                className='min-h-20 border-slate-200 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 transition-all duration-200 resize-none bg-white/95 backdrop-blur-sm'
                 {...register('description', {
                   required: 'Description is required',
                 })}
@@ -245,11 +295,12 @@ export const AddExpense = () => {
               )}
             </div>
 
-            <DialogFooter>
+            <DialogFooter className='gap-3'>
               <DialogClose asChild>
                 <Button
                   variant='outline'
                   type='button'
+                  className='h-11 bg-background border-border hover:bg-accent hover:text-accent-foreground transition-colors'
                 >
                   Cancel
                 </Button>
@@ -257,14 +308,12 @@ export const AddExpense = () => {
               <Button
                 type='submit'
                 disabled={isSubmitting}
+                className='h-11 bg-gradient-to-r from-emerald-primary to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-500/25 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] min-w-[120px]'
               >
                 {isSubmitting ? (
-                  <div className='flex items-center gap-2'>
-                    <Loader2 className='h-4 w-4 animate-spin' />
-                    Submitting...
-                  </div>
+                  <div className='flex items-center gap-2'>Saving...</div>
                 ) : (
-                  'Submit'
+                  <div className='flex items-center gap-2'>Save</div>
                 )}
               </Button>
             </DialogFooter>

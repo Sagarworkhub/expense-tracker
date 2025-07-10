@@ -116,13 +116,10 @@ export const RecentExpenses = () => {
           </div>
         ) : (
           <div className='space-y-2'>
-            {expenses.map((expense, index) => (
+            {expenses.map((expense) => (
               <div
                 key={expense.id}
                 className='group flex items-center justify-between space-x-4 p-3 rounded-lg hover:bg-accent/50 transition-all duration-200 border border-transparent hover:border-emerald-primary/20'
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
               >
                 <div className='flex items-center space-x-4 min-w-0 flex-1'>
                   <Avatar className='size-10 ring-2 ring-emerald-primary/20 group-hover:ring-emerald-primary/40 transition-all duration-200'>

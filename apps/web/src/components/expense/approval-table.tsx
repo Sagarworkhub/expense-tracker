@@ -96,17 +96,13 @@ export function ApprovalTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className='text-black font-semibold'>User</TableHead>
-            <TableHead className='text-black font-semibold'>
-              Description
-            </TableHead>
-            <TableHead className='text-black font-semibold'>Category</TableHead>
-            <TableHead className='text-black font-semibold'>Amount</TableHead>
-            <TableHead className='text-black font-semibold'>Date</TableHead>
-            <TableHead className='text-black font-semibold'>
-              Submitted
-            </TableHead>
-            <TableHead className='text-black font-semibold text-right pr-4'>
+            <TableHead className='font-semibold'>User</TableHead>
+            <TableHead className='font-semibold'>Description</TableHead>
+            <TableHead className='font-semibold'>Category</TableHead>
+            <TableHead className='font-semibold'>Amount</TableHead>
+            <TableHead className='font-semibold'>Date</TableHead>
+            <TableHead className='font-semibold'>Submitted</TableHead>
+            <TableHead className='font-semibold text-right pr-4'>
               Actions
             </TableHead>
           </TableRow>

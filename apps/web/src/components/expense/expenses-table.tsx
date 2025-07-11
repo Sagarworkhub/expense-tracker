@@ -39,14 +39,12 @@ export const ExpensesTable = ({ expenses = [] }: ExpensesTableProps) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className='text-black font-semibold'>
-              Description
-            </TableHead>
-            <TableHead className='text-black font-semibold'>Category</TableHead>
-            <TableHead className='text-black font-semibold'>Date</TableHead>
-            <TableHead className='text-black font-semibold'>Status</TableHead>
+            <TableHead className='font-semibold'>Description</TableHead>
+            <TableHead className='font-semibold'>Category</TableHead>
+            <TableHead className='font-semibold'>Date</TableHead>
+            <TableHead className='font-semibold'>Status</TableHead>
             <TableHead className='font-semibold'>Submitted By</TableHead>
-            <TableHead className='text-black font-semibold text-right pr-4'>
+            <TableHead className='font-semibold text-right pr-4'>
               Amount
             </TableHead>
           </TableRow>
